@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000" # Map port 3000 of the container to port 3000 on the host
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/nestjs_app
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017" # Optional: map MongoDB port
+    volumes:
+      - mongo-data:/data/db # Persist data
+
+volumes:
+  mongo-data:
